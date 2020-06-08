@@ -7,6 +7,7 @@ USERNAME="moniker"
 SEEDS="610cf8a6e8cefbaded845f1c1dc3b10a670be26b@node1.testnet.pokt.network:26656,e6946760d9833f49da39aae9500537bef6f33a7a@node2.testnet.pokt.network:26656,7674a47cc977326f1df6cb92c7b5a2ad36557ea2@node3.testnet.pokt.network:26656"
 EXTERNAL_IP=$(curl -s 2ip.ru)
 
+rm ~/.pocket/config/config.json
 apt update && apt install -y nginx gcc libleveldb-dev build-essential
 
 if [[ ! -d "/root/pokt" ]]; then
