@@ -81,25 +81,19 @@ echo -e "\n\n\n\n\n\n\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -
 
 wget https://raw.githubusercontent.com/pokt-network/pocket-network-genesis/master/testnet/genesis.json -O ~/.pocket/config/genesis.json > /dev/null 2>&1
 
-
-
-if [[ ! -f "/etc/nginx/sites-available/pocket-proxy.conf" ]]; then
-    echo "server {
-    listen 8082 ssl;
-    listen [::]:8082 ssl;
-
-    ssl on;
-    ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
-    ssl_certificate_key  /etc/ssl/private/nginx-selfsigned.key;
-    access_log /var/log/nginx/reverse-access.log;
-    error_log /var/log/nginx/reverse-error.log;
-    location / {
-        proxy_pass http://$EXTERNAL_IP:8081;
-    }
-    }" >> /etc/nginx/sites-available/pocket-proxy.conf
-    ln -s /etc/nginx/sites-available/pocket-proxy.conf /etc/nginx/sites-enabled/pocket-proxy.conf
-fi
-
+echo "server {
+listen 8082 ssl;
+listen [::]:8082 ssl;
+ssl on;
+ssl_certificate /etc/ssl/certs/nginx-selfsigned.crt;
+ssl_certificate_key  /etc/ssl/private/nginx-selfsigned.key;
+access_log /var/log/nginx/reverse-access.log;
+error_log /var/log/nginx/reverse-error.log;
+location / {
+    proxy_pass http://$EXTERNAL_IP:8081;
+}
+}" > /etc/nginx/sites-available/pocket-proxy.conf
+ln -s /etc/nginx/sites-available/pocket-proxy.conf /etc/nginx/sites-enabled/pocket-proxy.conf
 
 if ! grep -Fxq "subjectAltName=IP:$EXTERNAL_IP" /etc/ssl/openssl.cnf; then
     sed -i -e "/\[ v3_ca \]/a subjectAltName=IP:$EXTERNAL_IP" /etc/ssl/openssl.cnf
