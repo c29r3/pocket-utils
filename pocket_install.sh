@@ -7,6 +7,8 @@ USERNAME="moniker"
 SEEDS="610cf8a6e8cefbaded845f1c1dc3b10a670be26b@node1.testnet.pokt.network:26656,e6946760d9833f49da39aae9500537bef6f33a7a@node2.testnet.pokt.network:26656,7674a47cc977326f1df6cb92c7b5a2ad36557ea2@node3.testnet.pokt.network:26656"
 EXTERNAL_IP=$(curl -s 2ip.ru)
 
+apt install -y nginx gcc
+
 if [[ ! -d "/root/pokt" ]]; then
     mkdir ~/pokt
 fi
@@ -74,7 +76,7 @@ sed -i -e "s/\"Seeds\": \"\"/\"Seeds\": \"$SEEDS\"/" ~/.pocket/config/config.jso
 
 
 echo -e "\n\n\n\n\n\n\n" | openssl req -x509 -nodes -days 365 -newkey rsa:2048 -keyout /etc/ssl/private/nginx-selfsigned.key -out /etc/ssl/certs/nginx-selfsigned.crt > /dev/null 2>&1
-apt install -y nginx
+
 
 wget https://raw.githubusercontent.com/pokt-network/pocket-network-genesis/master/testnet/genesis.json -O ~/.pocket/config/genesis.json > /dev/null 2>&1
 
