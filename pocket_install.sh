@@ -11,7 +11,7 @@ if [[ ! -d "/root/pokt" ]]; then
     mkdir ~/pokt
 fi
 
-mkdir -p .pocket/config 
+mkdir -p ~/.pocket/config 
 
 cd ~/pokt
 
