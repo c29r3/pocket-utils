@@ -96,7 +96,8 @@ if [[ ! -f "/etc/nginx/sites-available/pocket-proxy.conf" ]]; then
     location / {
         proxy_pass http://$EXTERNAL_IP:8081;
     }
-}" >> /etc/nginx/sites-available/pocket-proxy.conf
+    }" >> /etc/nginx/sites-available/pocket-proxy.conf
+    ln -s /etc/nginx/sites-available/pocket-proxy.conf /etc/nginx/sites-enabled/pocket-proxy.conf
 fi
 
 
